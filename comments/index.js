@@ -22,12 +22,11 @@ app.post('/posts/:id/comments', async (req, res) => {
         comments.push({ id: id, content })
         commentsByPostId[req.params.id] = comments;
         await axios.post('http://localhost:4005/events', {
+            type: "comment created",
             data: {
                 id: id,
                 content: content,
                 postId: req.params.id
-
-
             }
         })
         res.status(201).send(commentsByPostId[req.params.id])
@@ -36,6 +35,13 @@ app.post('/posts/:id/comments', async (req, res) => {
     }
 })
 
+
+app.post('/events', (req, res) => {
+    console.log('Event recives:', req.body.type)
+    res.send({});
+
+})
+
 app.listen(4001, () => {
-    console.log(`listening on  comment the port 4001`)
+    console.log(`listening on  comment the port 4001 comment port`)
 })
