@@ -26,7 +26,8 @@ app.post('/posts/:id/comments', async (req, res) => {
             data: {
                 id: id,
                 content: content,
-                postId: req.params.id
+                postId: req.params.id,
+                status: 'Pending'
             }
         })
         res.status(201).send(commentsByPostId[req.params.id])
