@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { urls } = require('../helpers/urls.helpers')
 const axios = require('axios')
-
+const urls = {
+    URL_EVENT_SERVICE: 'event-bus-srv:4005',
+    URL_POST_SERVICE: 'posts-clusterip-srv:4000'
+}
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
