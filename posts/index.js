@@ -7,7 +7,7 @@ const axios = require('axios');
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
-
+URL_EVENT_SERVICE = 'event-bus-srv:4005'
 const posts = {};
 
 app.get('/posts', (req, res) => {
@@ -23,7 +23,7 @@ app.post('/posts', async (req, res) => {
         title
     };
 
-    await axios.post('http://localhost:4005/events', {
+    await axios.post(`http://${URL_EVENT_SERVICE}/events`, {
         type: 'PostCreated',
         data: {
             id,
@@ -41,5 +41,6 @@ app.post('/events', (req, res) => {
 })
 
 app.listen(4000, () => {
+    console.log('v55')
     console.log('Listening on 4000 post Port');
 });

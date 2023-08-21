@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const { randomBytes } = require('crypto')
 const cors = require('cors')
+const { urls } = require('../helpers/urls.helpers')
 const axios = require('axios')
 
 const commentsByPostId = {};
@@ -21,7 +22,7 @@ app.post('/posts/:id/comments', async (req, res) => {
         const comments = commentsByPostId[req.params.id] || []
         comments.push({ id: id, content })
         commentsByPostId[req.params.id] = comments;
-        await axios.post('http://localhost:4005/events', {
+        await axios.post(`http://${urls.URL_EVENT_SERVICE}/events`, {
             type: "CommentCreated",
             data: {
                 id: id,
@@ -47,7 +48,7 @@ app.post('/events', async (req, res) => {
             return comment.id === id
         })
         comment.status = status
-        await axios.post('http://localhost:4005/events', {
+        await axios.post(`http://${urls.URL_EVENT_SERVICE}/events`, {
             type: 'CommentUpdated',
             data: {
                 id, status, postId, content
